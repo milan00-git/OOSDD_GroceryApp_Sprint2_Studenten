@@ -34,10 +34,14 @@ namespace Grocery.App.ViewModels
 
         private void GetAvailableProducts()
         {
-            //Maak de lijst AvailableProducts leeg          
+            //Maakt de lijst AvailableProducts leeg          
             AvailableProducts.Clear();
            
-            //Haal de lijst met producten op
+            //Haalt de lijst met producten op
+            foreach(Product p in AvailableProducts)
+            {
+                Console.WriteLine($"Product naam: {p.Name}, stock: {p.Stock} ");
+            }
 
             //Controleer of het product al op de boodschappenlijst staat, zo niet zet het in de AvailableProducts lijst
 
