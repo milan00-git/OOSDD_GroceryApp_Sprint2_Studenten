@@ -2,7 +2,7 @@
 using Grocery.Core.Interfaces.Repositories;
 using Grocery.Core.Models;
 
-// TEST
+
 namespace Grocery.Core.Data.Repositories
 {
     public class ClientRepository : IClientRepository
@@ -20,17 +20,33 @@ namespace Grocery.Core.Data.Repositories
 
         public Client? Get(string email)
         {
-            return clientList[0];
+            foreach (var client in clientList)
+            {
+                if (client.emailAddress.Equals(email, StringComparison.OrdinalIgnoreCase))
+                {
+                    return client;
+                }
+            }
+            return null;
         }
 
         public Client? Get(int id)
         {
-            return clientList[0];
-        }
+            foreach (var client in clientList)
+            {
+                if (client.Id == id)
+                {
+                    return client;
+                }
 
+            }
+            return null;
+        }
+ 
         public List<Client> GetAll()
         {
             return clientList;
         }
+
     }
 }
