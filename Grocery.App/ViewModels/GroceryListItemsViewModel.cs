@@ -1,10 +1,12 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Grocery.App.Views;
+using Grocery.Core.Data.Repositories;
 using Grocery.Core.Interfaces.Services;
 using Grocery.Core.Models;
 using System.Collections.ObjectModel;
 using System.Security.Cryptography.X509Certificates;
+using Windows.ApplicationModel.Store;
 
 namespace Grocery.App.ViewModels
 {
@@ -59,9 +61,6 @@ namespace Grocery.App.ViewModels
                     AvailableProducts.Add(product);
                 }
             }
-
-            
-
         }
 
         partial void OnGroceryListChanged(GroceryList value)
@@ -84,6 +83,19 @@ namespace Grocery.App.ViewModels
             //Werk de voorraad (Stock) van het product bij en zorg dat deze wordt vastgelegd (middels _productService)
             //Werk de lijst AvailableProducts bij, want dit product is niet meer beschikbaar
             //call OnGroceryListChanged(GroceryList);
+
+            if (product == null || product.Id <= 0 || product.Stock <= 0)
+            {
+                return;
+            }
+
+            var newItem = new GroceryListItem(0, GroceryList.Id, product.Id, 1);
+            _groceryListItemsService.Add(newItem);
+
+            product.Stock -= 1;
+            _productService.Update(product);
+
+            Load(GroceryList.Id);
         }
     }
 }
