@@ -32,3 +32,27 @@ De opdracht is om zelfstandig de login functionaliteit te laten werken.
 7. In App.xaml.cs staat //MainPage = new LoginView(viewModel); Haal hier de // weg en zet de regel erboven in commentaar, zodat AppShell wordt uitgeschakeld.  
 8. Uncomment de route naar het Login scherm in AppShell.xaml.cs: //Routing.RegisterRoute("Login", typeof(LoginView)); 
  
+ ### Gitflow
+
+ Voor het werken aan code in Visual Studio word er gebruik gemaakt van de volgende Gitflow structuur: 
+
+ ```
+ 1. main (hoofd branch, code zit hierop wanneer het klaar is voor productie)
+
+ 2. hotfix (branch vanaf main om mogelijke kritieke bugs op te lossen, wanneer klaar 
+			merge naar main en development)
+
+ 3. release (branch tussen 'main' en 'development' wanneer er genoeg features zijn in development en er bugs/documentatie moet
+			worden aangepast. Word gebruikt voordat het in productie gaat in 'main', branch vanaf development)
+
+ 3. development (Het samenvoegen van alle 'feature' branches om het project samen te stellen. branch vanaf main)
+
+ 4. feature (branch vanaf development waar specifieke onderdelen van een project in worden gecodeerd. Als het klaar is,
+			 mergen naar development via pull request en branch verwijderen via git)
+```
+
+Om de gitflow nog beter in te richten is er ook gebruik gemaakt van de 'git flow init' command. 
+
+Wat doet dit? 
+1. Geeft een afgesproken naam aan in de .git/config die je zelf kan instellen.
+2. handig bij het opvragen van branches om te kunnen zien welke branches 'main', 'release' etc. zijn.
