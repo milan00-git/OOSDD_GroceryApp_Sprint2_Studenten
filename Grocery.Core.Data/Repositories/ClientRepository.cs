@@ -20,12 +20,19 @@ namespace Grocery.Core.Data.Repositories
 
         public Client? Get(string email)
         {
-            return clientList[0];
+            if (clientList.emailAdress.Equals(email, StringComparison.OrdinalIgnoreCase))
+            {
+                return clientList;
+            }
         }
 
         public Client? Get(int id)
         {
-            return clientList[0];
+            foreach (var client in clienlist)
+            {
+                return clientList;
+            }
+            return null;
         }
 
         public List<Client> GetAll()
