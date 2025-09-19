@@ -4,6 +4,7 @@ using Grocery.App.Views;
 using Grocery.Core.Interfaces.Services;
 using Grocery.Core.Models;
 using System.Collections.ObjectModel;
+using System.Security.Cryptography.X509Certificates;
 
 namespace Grocery.App.ViewModels
 {
@@ -34,20 +35,31 @@ namespace Grocery.App.ViewModels
 
         private void GetAvailableProducts()
         {
-            //Maakt de lijst AvailableProducts leeg          
+            // Maakt de lijst AvailableProducts leeg          
             AvailableProducts.Clear();
-           
+
             //Haalt de lijst met producten op
-            foreach(Product p in AvailableProducts)
+
+            var allProducts = _productService.GetAll();
+
+            foreach (Product p in allProducts)
             {
                 Console.WriteLine($"Product naam: {p.Name}, stock: {p.Stock} ");
             }
 
-            //Controleer of het product al op de boodschappenlijst staat, zo niet zet het in de AvailableProducts lijst
+            // Controleert of het product al op de boodschappenlijst staat, zo niet zet het in de AvailableProducts lijst
+            // Houdt rekening met de voorraad (als die nul is kun je het niet meer aanbieden).
 
-            
-            //Houdt rekening met de voorraad (als die nul is kun je het niet meer aanbieden).
-            
+            foreach (var product in allProducts)
+            {
+                bool isInGroceryList = MyGroceryListItems.Any(item => item.ProductId == product.Id);
+
+                if (!isInGroceryList && product.Stock > 0)
+                {
+                    AvailableProducts.Add(product);
+                }
+            }
+
             
 
         }
